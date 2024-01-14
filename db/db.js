@@ -1,12 +1,15 @@
+require("dotenv").config();
 const mongoose = require('mongoose')
-mongoose.connect('mongodb+srv://uday:kookaburra@cluster0.acq17kp.mongodb.net/BLOG')
 
-const blogSchema = new mongoose.Schema({
-    id : Number,
-    title : String,
-    description : String
-})
+const connectionString = process.env.DB_CONNECTION_STRING; 
 
-const blogObj = mongoose.model('blogCollection',blogSchema)
+const connectDB = async ()=>{
+    try {
+        await mongoose.connect(connectionString);
+        console.log("Connected to Database");
+    } catch (error) {
+        console.error(error);
+    }
+}
 
-module.exports = {blogObj}
+module.exports = connectDB;

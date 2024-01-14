@@ -1,11 +1,16 @@
 const express = require('express')
-
-const routers = require('./Routes/routes')
+require("dotenv").config();
+const connectDB = require('./db/db');
 
 const app = express()
 
 app.use(express.json())
 
-app.use(routers)
+app.use('/api/v1/post',require('./Routes/post'))
 
-app.listen(3000)
+const port = process.env.PORT||3001;
+
+app.listen(port,()=>{
+    connectDB();
+    console.log(`Server is listening on ${port}`);
+})
